@@ -36,8 +36,18 @@
       "ssh_password": "vagrant",
       "shutdown_command": "sudo systemctl poweroff",
       "vboxmanage": [
-        ["modifyvm", "{{ .Name }}", "--memory", "{{ user `memory` }}"],
-        ["modifyvm", "{{ .Name }}", "--cpus", "{{ user `cpus` }}"]
+        [
+          "modifyvm",
+          "{{ .Name }}",
+          "--memory",
+          "{{ user `memory` }}"
+        ],
+        [
+          "modifyvm",
+          "{{ .Name }}",
+          "--cpus",
+          "{{ user `cpus` }}"
+        ]
       ]
     }    
   ],

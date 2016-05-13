@@ -2,11 +2,13 @@
   "description": "Ubuntu 16.04 for Vagrant",
   "_based_on": "https://github.com/s12v/xenial",
   "variables": {
+    "version": "20160513",
     "hostname": "xenial",
     "disk_size": "10240",
     "memory": "1024",
     "cpus": "1",
-    "headless": "false"
+    "headless": "false",
+    "atlas_username": "metalarend"
   },
   "builders": [
     {
@@ -81,15 +83,15 @@
       },
       {
         "type": "atlas",
-        "artifact": "s12v/xenial64",
+        "artifact": "{{ user `atlas_username` }}/xenial64",
         "artifact_type": "vagrant.box",
         "metadata": {
-          "version": "20160407",
-          "description": "**Ubuntu 16.04 (Xenial Xerus) Beta 2**. Baked with https://github.com/s12v/xenial\n - Ansible, Puppet, Chef\n - VBoxGuestAdditions 5.0.x\n - 80G disk\n - Predictable network interface names turned off",
-          "created_at": "{{timestamp}}",
+          "version": "{{ user `version` }}",
+          "description": "**Ubuntu 16.04 (Xenial Xerus) Server**. Baked with https://github.com/MetalArend/xenial\n - ready for use in vagrant",
+          "created_at": "{{ timestamp }}",
           "provider": "virtualbox"
         }
       }
     ]
-  ],
+  ]
 }

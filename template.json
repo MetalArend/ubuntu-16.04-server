@@ -1,4 +1,11 @@
 {
+  "variables": {
+    "hostname": "xenial",
+    "disk_size": "10240",
+    "memory": "1024",
+    "cpus": "1",
+    "headless": "false"
+  },
   "builders": [
     {
       "type": "virtualbox-iso",
@@ -83,11 +90,4 @@
       }
     ]
   ],
-  "variables": {
-    "cpus": "1",
-    "memory": "512",
-    "hostname": "xenial",
-    "headless": "false",
-    "disk_size": "81920"
-  }
 }

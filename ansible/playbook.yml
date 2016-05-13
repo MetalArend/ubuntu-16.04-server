@@ -3,12 +3,6 @@
   become: true
   tasks:
 
-  - name: Install provisioners
-    apt: name={{ item }} state=present
-    with_items:
-    - puppet
-    - chef
-
   - name: Vagrant insecure key
     authorized_key: user=vagrant key=https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
 

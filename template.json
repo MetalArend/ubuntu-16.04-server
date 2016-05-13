@@ -14,10 +14,10 @@
     {
       "type": "virtualbox-iso",
       "guest_os_type": "Ubuntu_64",
-      "iso_url": "http://releases.ubuntu.com/16.04/ubuntu-16.04-beta2-server-amd64.iso",
-      "iso_checksum": "0f948fea5a587a62a873d2c001948a6ffbda20b67b05a468006caf9dfd41bcd7",
+      "iso_url": "http://releases.ubuntu.com/16.04/ubuntu-16.04-server-amd64.iso",
+      "iso_checksum": "b8b172cbdf04f5ff8adc8c2c1b4007ccf66f00fc6a324a6da6eba67de71746f6",
       "iso_checksum_type": "sha256",
-      "vm_name": "packer-ubuntu-16.04-amd64",
+      "vm_name": "packer-ubuntu-16.04-server-amd64",
       "disk_size": "{{ user `disk_size` }}",
       "headless": "{{ user `headless` }}",
       "boot_wait": "5s",
@@ -78,12 +78,12 @@
       {
         "type": "vagrant",
         "compression_level": 9,
-        "output": "ubuntu-16.04-amd64.box",
+        "output": "ubuntu-16.04-server-amd64.box",
         "keep_input_artifact": false
       },
       {
         "type": "atlas",
-        "artifact": "{{ user `atlas_username` }}/xenial64",
+        "artifact": "{{ user `atlas_username` }}/ubuntu-16.04-server-amd64",
         "artifact_type": "vagrant.box",
         "metadata": {
           "version": "{{ user `version` }}",

@@ -1,4 +1,6 @@
 {
+  "description": "Ubuntu 16.04 for Vagrant",
+  "_based_on": "https://github.com/s12v/xenial",
   "variables": {
     "hostname": "xenial",
     "disk_size": "10240",

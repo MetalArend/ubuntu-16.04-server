@@ -17,3 +17,7 @@ Standard image from http://releases.ubuntu.com/16.04/ with:
    Packer will first look there, before downloading http://releases.ubuntu.com/16.04/ubuntu-16.04-server-amd64.iso.
  - Make sure the md5 is correct.
  
+## Included fixes
+
+ - https://github.com/mitchellh/vagrant/issues/7288
+ - https://github.com/geerlingguy/packer-ubuntu-1604/issues/1#issuecomment-213130111

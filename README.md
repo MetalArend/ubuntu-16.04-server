@@ -9,4 +9,5 @@ Standard image from http://releases.ubuntu.com/16.04/ with:
 ## How to bake:
 
 1. Install [packer.io](https://www.packer.io)
-2. Run `packer build template.json`
+2. Run `packer build ubuntu-16.04-server-amd64.json`
+

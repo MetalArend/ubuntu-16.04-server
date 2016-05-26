@@ -11,3 +11,9 @@ Standard image from http://releases.ubuntu.com/16.04/ with:
 1. Install [packer.io](https://www.packer.io)
 2. Run `packer build ubuntu-16.04-server-amd64.json`
 
+## Optional
+
+ - Save the iso file inside the iso directory: iso/ubuntu-16.04-server-amd64.iso.
+   Packer will first look there, before downloading http://releases.ubuntu.com/16.04/ubuntu-16.04-server-amd64.iso.
+ - Make sure the md5 is correct.
+ 

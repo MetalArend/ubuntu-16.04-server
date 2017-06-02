@@ -21,3 +21,17 @@ Standard image from http://releases.ubuntu.com/16.04/ with:
 
  - https://github.com/mitchellh/vagrant/issues/7288
  - https://github.com/geerlingguy/packer-ubuntu-1604/issues/1#issuecomment-213130111
+ 
+## Post-processor atlas
+
+  {
+    "type": "atlas",
+    "artifact": "{{ user `atlas_username` }}/ubuntu-16.04-server-amd64",
+    "artifact_type": "vagrant.box",
+    "metadata": {
+      "version": "{{ user `version` }}",
+      "description": "**Ubuntu 16.04 (Xenial Xerus) Server**. Baked with https://github.com/MetalArend/xenial\n - ready for use in vagrant",
+      "created_at": "{{ timestamp }}",
+      "provider": "virtualbox"
+    }
+  }

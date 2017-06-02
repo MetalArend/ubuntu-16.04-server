@@ -7,23 +7,23 @@
     "disk_size": "10240",
     "memory": "1024",
     "cpus": "1",
-    "headless": "false",
-    "atlas_username": "metalarend"
+    "headless": "true",
+    "iso_url": "http://releases.ubuntu.com/16.04/ubuntu-16.04.2-server-amd64.iso",
+    "iso_checksum": "737ae7041212c628de5751d15c3016058b0e833fdc32e7420209b76ca3d0a535",
+    "iso_checksum_type": "sha256"
   },
   "builders": [
     {
-      "type": "virtualbox-iso",
       "guest_os_type": "Ubuntu_64",
       "iso_urls": [
         "iso/ubuntu-16.04-server-amd64.iso",
-        "http://releases.ubuntu.com/16.04/ubuntu-16.04-server-amd64.iso"
+        "{{ user `iso_url` }}"
       ],
-      "iso_checksum": "b8b172cbdf04f5ff8adc8c2c1b4007ccf66f00fc6a324a6da6eba67de71746f6",
-      "iso_checksum_type": "sha256",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "vm_name": "packer-ubuntu-16.04-server-amd64",
       "disk_size": "{{ user `disk_size` }}",
       "headless": "{{ user `headless` }}",
-      "boot_wait": "5s",
       "http_directory": "http",
       "boot_command": [
         "<enter><wait>",
@@ -39,16 +39,19 @@
         "<bs><bs><bs>",
         "/install/vmlinuz ",
         "initrd=/install/initrd.gz ",
-        "auto=true ",
-        "priority=critical ",
+        "auto-install/enable=true ",
+        "debconf/priority=critical ",
         "net.ifnames=0 ",
-        "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
         "<wait><enter>"
       ],
-      "ssh_wait_timeout": "30m",
+      "boot_wait": "10s",
+      "ssh_wait_timeout": "60m",
+      "ssh_port": 22,
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "type": "virtualbox-iso",
       "vboxmanage": [
         [
           "modifyvm",
@@ -62,23 +65,21 @@
           "--cpus",
           "{{ user `cpus` }}"
         ]
-      ]
+      ],
+      "virtualbox_version_file": ".vbox_version"
     }
   ],
   "provisioners": [
     {
-      "type": "shell",
-      "inline": [
-        "export DEBIAN_FRONTEND=noninteractive",
-        "sudo apt update",
-        "sudo apt install -y linux-headers-$(uname -r) build-essential dkms",
-        "sudo mkdir /media/VBoxGuestAdditions",
-        "sudo mount -o loop,ro /home/vagrant/VBoxGuestAdditions.iso /media/VBoxGuestAdditions",
-        "sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run",
-        "sudo umount /media/VBoxGuestAdditions",
-        "sudo rmdir /media/VBoxGuestAdditions",
-        "rm /home/vagrant/VBoxGuestAdditions.iso"
-      ]
+      "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'",
+      "override": {
+        "virtualbox-iso": {
+          "scripts": [
+            "install.sh"
+          ]
+        }
+      },
+      "type": "shell"
     }
   ],
   "post-processors": [
@@ -87,18 +88,7 @@
         "type": "vagrant",
         "compression_level": 9,
         "output": "ubuntu-16.04-server-amd64.box",
-        "keep_input_artifact": false
-      },
-      {
-        "type": "atlas",
-        "artifact": "{{ user `atlas_username` }}/ubuntu-16.04-server-amd64",
-        "artifact_type": "vagrant.box",
-        "metadata": {
-          "version": "{{ user `version` }}",
-          "description": "**Ubuntu 16.04 (Xenial Xerus) Server**. Baked with https://github.com/MetalArend/xenial\n - ready for use in vagrant",
-          "created_at": "{{ timestamp }}",
-          "provider": "virtualbox"
-        }
+        "keep_input_artifact": true
       }
     ]
   ]
